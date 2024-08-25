@@ -1,0 +1,52 @@
+name: Deploy to server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate .env file
+        uses: SpicyPizza/create-envfile@v2
+        with:
+          envkey_PORT: ${{ secrets.PORT }}
+          envkey_MODE: ${{ secrets.MODE }}
+          envkey_JWT_ACCESS_SECRET: ${{ secrets.JWT_ACCESS_SECRET }}
+          envkey_JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
+          envkey_DB_HOST: ${{ secrets.DB_HOST }}
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_DB_PORT: ${{ secrets.DB_PORT }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          envkey_SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          envkey_SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          envkey_SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          envkey_FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          envkey_REDIS_SERVER: ${{ secrets.REDIS_SERVER }}
+
+          file_name: .env
+          fail_on_empty: false
+
+      - name: Build Docker images
+        run: |
+          docker build . -t api_repository:${{ github.sha }}
+
+  run_app:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: remove running container
+        run: |
+          docker rm --force api_repository
+
+      - name: Run Docker images
+        run: |
+          docker run -d --restart unless-stopped -p 2500:8000 --name api_repository api_repository:${{ github.sha }}
