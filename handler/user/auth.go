@@ -2,6 +2,7 @@ package user_handler
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -120,7 +121,7 @@ func (handler *authHandler) Register(c *fiber.Ctx) error {
 
 	authDto.FirstName = registerRequest.FirstName
 	authDto.LastName = registerRequest.LastName
-	authDto.Email = registerRequest.Email
+	authDto.Email = strings.ToLower(registerRequest.Email)
 	authDto.PhoneNumber = registerRequest.PhoneNumber
 	authDto.Password = registerRequest.Password
 
