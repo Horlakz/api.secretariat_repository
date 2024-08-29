@@ -8,6 +8,7 @@ type FileDTO struct {
 	Name     string    `json:"name"`
 	Key      string    `json:"key"`
 	MimeType string    `json:"mime_type"`
+	Ext      string    `json:"ext"`
 	Size     int64     `json:"size"`
 	UserId   uuid.UUID `json:"user_id"`
 }

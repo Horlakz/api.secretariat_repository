@@ -45,6 +45,7 @@ func (fs *fileService) ConvertToDTO(file model.File) (dto dto.FileDTO) {
 	dto.Name = file.Name
 	dto.Key = file.Key
 	dto.MimeType = file.MimeType
+	dto.Ext = file.Ext
 	dto.Size = file.Size
 	dto.UserId = file.UserId
 	dto.CreatedAt = file.CreatedAt
@@ -58,6 +59,7 @@ func (fs *fileService) ConvertToModel(dto dto.FileDTO) (file model.File) {
 	file.Name = dto.Name
 	file.Key = dto.Key
 	file.MimeType = dto.MimeType
+	file.Ext = dto.Ext
 	file.Size = dto.Size
 	file.UserId = dto.UserId
 

@@ -2,6 +2,7 @@ package file_handler
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -31,6 +32,11 @@ func NewFileHandler(fileService file_service.FileServiceInterface) FileHandlerIn
 	return &fileHandler{fileService: fileService}
 }
 
+func (f *fileHandler) GetFileExt(name string) string {
+	return strings.Split(name, ".")[len(strings.Split(name, "."))-1]
+
+}
+
 func (f *fileHandler) CreateFile(c *fiber.Ctx) error {
 	var resp response.Response
 	var createFileReq request.CreateFileRequest
@@ -50,6 +56,7 @@ func (f *fileHandler) CreateFile(c *fiber.Ctx) error {
 	fileDto.MimeType = createFileReq.MimeType
 	fileDto.Size = createFileReq.Size
 	fileDto.UserId = userId
+	fileDto.Ext = f.GetFileExt(createFileReq.Name)
 
 	if _, err := f.fileService.CreateFile(fileDto); err != nil {
 		resp.Status = constants.ServerErrorInternal
