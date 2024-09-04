@@ -8,8 +8,7 @@ type UserResponse struct {
 }
 
 type UserResponseData struct {
-	FirstName    string `json:"first_name"`
-	LastName     string `json:"last_name"`
-	Email        string `json:"email"`
-	ReferralCode string `json:"referral_code"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
 }
