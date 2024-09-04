@@ -49,6 +49,7 @@ func (u *userHandler) UserDetails(c *fiber.Ctx) error {
 	resp.Data.FirstName = user.FirstName
 	resp.Data.LastName = user.LastName
 	resp.Data.Email = user.Email
+	resp.Data.PhoneNumber = user.PhoneNumber
 
 	return c.Status(http.StatusOK).JSON(resp)
 }
