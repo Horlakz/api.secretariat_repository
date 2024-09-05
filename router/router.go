@@ -16,7 +16,7 @@ func InitializeRouter(router *fiber.App, dbConn database.DatabaseInterface, env 
 		return c.Next()
 	})
 
-	main.Get("/monitor", monitor.New(monitor.Config{Title: "Thryvo API Monitor"}))
+	main.Get("/monitor", monitor.New(monitor.Config{Title: "Secretariat Repository API Monitor"}))
 
 	InitializeUserRouter(main, dbConn, env)
 	InitializeFileRouter(main, dbConn, env)

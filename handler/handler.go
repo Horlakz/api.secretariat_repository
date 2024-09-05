@@ -28,9 +28,9 @@ func Index(c *fiber.Ctx) error {
 		Author  string `json:"author"`
 	}
 
-	about.Name = "Thryvo API"
-	about.Version = "0.0.1"
-	about.Author = "Horlakz"
+	about.Name = "Secretariat Repository"
+	about.Version = "1.0.0"
+	about.Author = "Diekoloreoluwa David"
 
 	resp.Status = http.StatusOK
 	resp.Message = http.StatusText(http.StatusOK)
